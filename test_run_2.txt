@@ -1,0 +1,190 @@
+﻿2025-12-19 17:37:37 [info     ] OpenAI client initialized      model=gpt-4.1-nano
+2025-12-19 17:37:37 [info     ] Starting smart home agent
+2025-12-19 17:37:37 [info     ] Starting MCP server
+2025-12-19 17:37:37 [info     ] Initializing providers         enabled=['smartthings']
+2025-12-19 17:37:37 [info     ] SmartThings API client connected
+2025-12-19 17:37:37 [debug    ] GET request                    endpoint=/locations
+2025-12-19 17:37:37 [info     ] SmartThings authentication successful locations_count=2
+2025-12-19 17:37:37 [info     ] Provider authenticated         provider=smartthings
+2025-12-19 17:37:37 [debug    ] Refreshing cache for provider  provider=smartthings
+2025-12-19 17:37:37 [debug    ] GET request                    endpoint=/locations
+2025-12-19 17:37:37 [info     ] Listed locations               count=2
+2025-12-19 17:37:37 [debug    ] GET request                    endpoint=/locations/31d69bed-c214-407d-9d10-c799a026f9f1/rooms
+2025-12-19 17:37:37 [info     ] Listed rooms                   count=1 location_id=31d69bed-c214-407d-9d10-c799a026f9f1
+2025-12-19 17:37:37 [debug    ] GET request                    endpoint=/locations/ded7abd6-2d9c-4eff-8ed4-ae5a424cc386/rooms
+2025-12-19 17:37:37 [info     ] Listed rooms                   count=4 location_id=ded7abd6-2d9c-4eff-8ed4-ae5a424cc386
+2025-12-19 17:37:37 [debug    ] GET request                    endpoint=/devices
+2025-12-19 17:37:38 [info     ] Listed devices                 count=8 location_id=None
+2025-12-19 17:37:38 [info     ] Device cache refreshed         devices=8 locations=2 rooms=5
+2025-12-19 17:37:38 [info     ] MCP server started successfully
+2025-12-19 17:37:38 [info     ] Agent started successfully
+
+============================================================
+Query: what is the status of tv
+============================================================
+2025-12-19 17:37:38 [info     ] Processing command             command='what is the status of tv'
+2025-12-19 17:37:38 [debug    ] GET request                    endpoint=/devices/86cde607-414a-a9aa-25fe-71fbeeb2c9f8/status
+2025-12-19 17:37:38 [debug    ] Got device state               device_id=86cde607-414a-a9aa-25fe-71fbeeb2c9f8 state={'mediaPlayback.supportedPlaybackCommands': ['play', 'pause', 'stop', 'fastForward', 'rewind'], 'mediaPlayback.playbackStatus': None, 'samsungvd.supportsPowerOnByOcf.supportsPowerOnByOcf': 'true', 'sec.deviceConnectionState.deviceConnectionState': None, 'mediaInputSource.supportedInputSources': [], 'mediaInputSource.inputSource': 'digitalTv', 'samsungvd.deviceCategory.category': 'tv', 'switch.switch': 'off', 'ocf.st': '2025-07-11T10:28:44Z', 'ocf.mndt': '2022-01-01', 'ocf.mnfv': 'T-PTMDEUC-1710.0|ST_ENERGY', 'ocf.mnhw': '', 'ocf.di': '86cde607-414a-a9aa-25fe-71fbeeb2c9f8', 'ocf.mnsl': '', 'ocf.dmv': 'res.1.1.0,sh.1.1.0', 'ocf.n': 'Samsung S95BA 65 TV', 'ocf.mnmo': 'QE65S95BATXXH', 'ocf.vid': 'VD-STV-2022', 'ocf.mnmn': 'Samsung Electronics', 'ocf.mnml': '', 'ocf.mnpv': '6.5', 'ocf.mnos': 'Tizen', 'ocf.pi': '86cde607-414a-a9aa-25fe-71fbeeb2c9f8', 'ocf.icv': 'core.1.1.0', 'samsungvd.supportsFeatures.mediaOutputSupported': True, 'samsungvd.supportsFeatures.imeAdvSupported': True, 'samsungvd.supportsFeatures.wifiUpdateSupport': None, 'samsungvd.supportsFeatures.executableServiceList': None, 'samsungvd.supportsFeatures.remotelessSupported': None, 'samsungvd.supportsFeatures.artSupported': None, 'samsungvd.supportsFeatures.mobileCamSupported': True, 'custom.disabledCapabilities.disabledCapabilities': ['samsungvd.supportsFeatures'], 'samsungvd.thingStatus.updatedTime': 1765872602, 'samsungvd.thingStatus.status': 'Idle', 'samsungvd.firmwareVersion.firmwareVersion': '3.5.1', 'audioVolume.volume': '0 %', 'powerConsumptionReport.powerConsumption': {'energy': 0, 'deltaEnergy': 0.038889, 'power': 0, 'powerEnergy': 0, 'persistedEnergy': 0, 'energySaved': 0.0, 'persistedSavedEnergy': 0, 'start': '2025-12-17T08:16:03Z', 'end': '2025-12-17T08:39:59Z'}, 'samsungvd.mediaInputSource.supportedInputSourcesMap': [{'id': 'dtv', 'name': 'TV'}], 'samsungvd.mediaInputSource.inputSource': 'HDMI3', 'samsungvd.ambient.info': None, 'custom.error.error': None, 'execute.data': None, 'tvChannel.tvChannel': '', 'tvChannel.tvChannelName': 'uW3QTCzW3B.Player', 'custom.picturemode.pictureMode': 'Optimised', 'custom.picturemode.supportedPictureModes': ['EyeComfort', 'Optimised'], 'custom.picturemode.supportedPictureModesMap': [{'id': 'modeGen_589826', 'name': 'EyeComfort'}, {'id': 'modeIntelligent', 'name': 'Optimised'}], 'samsungvd.ambientContent.supportedAmbientApps': ['weather'], 'custom.soundmode.supportedSoundModesMap': [{'id': 'modeAmplify', 'name': 'Amplify'}, {'id': 'modeStandard', 'name': 'Standard'}], 'custom.soundmode.soundMode': 'Amplify', 'custom.soundmode.supportedSoundModes': ['Amplify', 'Standard'], 'audioMute.mute': 'muted', 'mediaTrackControl.supportedTrackControlCommands': None}
+Device: Samsung S95BA 65 TV
+ID: 86cde607-414a-a9aa-25fe-71fbeeb2c9f8
+Type: other
+Location: Dom polanka
+Room: Salon
+Capabilities: other, switch, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other
+
+Status:
+  audioMute:
+    - mute: muted
+  audioVolume:
+    - volume: 0 %
+  custom:
+    - disabledCapabilities.disabledCapabilities: ['samsungvd.supportsFeatures']
+    - error.error: None
+    - picturemode.pictureMode: Optimised
+    - picturemode.supportedPictureModes: ['EyeComfort', 'Optimised']
+    - picturemode.supportedPictureModesMap: [{'id': 'modeGen_589826', 'name': 'EyeComfort'}, {'id': 'modeIntelligent', 'name': 'Optimised'}]
+    - soundmode.soundMode: Amplify
+    - soundmode.supportedSoundModes: ['Amplify', 'Standard']
+    - soundmode.supportedSoundModesMap: [{'id': 'modeAmplify', 'name': 'Amplify'}, {'id': 'modeStandard', 'name': 'Standard'}]
+  execute:
+    - data: None
+  mediaInputSource:
+    - inputSource: digitalTv
+    - supportedInputSources: []
+  mediaPlayback:
+    - playbackStatus: None
+    - supportedPlaybackCommands: ['play', 'pause', 'stop', 'fastForward', 'rewind']
+  mediaTrackControl:
+    - supportedTrackControlCommands: None
+  ocf:
+    - di: 86cde607-414a-a9aa-25fe-71fbeeb2c9f8
+    - dmv: res.1.1.0,sh.1.1.0
+    - icv: core.1.1.0
+    - mndt: 2022-01-01
+    - mnfv: T-PTMDEUC-1710.0|ST_ENERGY
+    - mnhw: 
+    - mnml: 
+    - mnmn: Samsung Electronics
+    - mnmo: QE65S95BATXXH
+    - mnos: Tizen
+    - mnpv: 6.5
+    - mnsl: 
+    - n: Samsung S95BA 65 TV
+    - pi: 86cde607-414a-a9aa-25fe-71fbeeb2c9f8
+    - st: 2025-07-11T10:28:44Z
+    - vid: VD-STV-2022
+  powerConsumptionReport:
+    - powerConsumption: {'energy': 0, 'deltaEnergy': 0.038889, 'power': 0, 'powerEnergy': 0, 'persistedEnergy': 0, 'energySaved': 0.0, 'persistedSavedEnergy': 0, 'start': '2025-12-17T08:16:03Z', 'end': '2025-12-17T08:39:59Z'}
+  samsungvd:
+    - ambient.info: None
+    - ambientContent.supportedAmbientApps: ['weather']
+    - deviceCategory.category: tv
+    - firmwareVersion.firmwareVersion: 3.5.1
+    - mediaInputSource.inputSource: HDMI3
+    - mediaInputSource.supportedInputSourcesMap: [{'id': 'dtv', 'name': 'TV'}]
+    - supportsFeatures.artSupported: None
+    - supportsFeatures.executableServiceList: None
+    - supportsFeatures.imeAdvSupported: True
+    - supportsFeatures.mediaOutputSupported: True
+    - supportsFeatures.mobileCamSupported: True
+    - supportsFeatures.remotelessSupported: None
+    - supportsFeatures.wifiUpdateSupport: None
+    - supportsPowerOnByOcf.supportsPowerOnByOcf: true
+    - thingStatus.status: Idle
+    - thingStatus.updatedTime: 1765872602
+  sec:
+    - deviceConnectionState.deviceConnectionState: None
+  switch:
+    - switch: off
+  tvChannel:
+    - tvChannel: 
+    - tvChannelName: uW3QTCzW3B.Player
+
+============================================================
+Query: check the status of samsung tv
+============================================================
+2025-12-19 17:37:38 [info     ] Processing command             command='check the status of samsung tv'
+2025-12-19 17:37:38 [debug    ] GET request                    endpoint=/devices/86cde607-414a-a9aa-25fe-71fbeeb2c9f8/status
+2025-12-19 17:37:38 [debug    ] Got device state               device_id=86cde607-414a-a9aa-25fe-71fbeeb2c9f8 state={'mediaPlayback.supportedPlaybackCommands': ['play', 'pause', 'stop', 'fastForward', 'rewind'], 'mediaPlayback.playbackStatus': None, 'samsungvd.supportsPowerOnByOcf.supportsPowerOnByOcf': 'true', 'sec.deviceConnectionState.deviceConnectionState': None, 'mediaInputSource.supportedInputSources': [], 'mediaInputSource.inputSource': 'digitalTv', 'samsungvd.deviceCategory.category': 'tv', 'switch.switch': 'off', 'ocf.st': '2025-07-11T10:28:44Z', 'ocf.mndt': '2022-01-01', 'ocf.mnfv': 'T-PTMDEUC-1710.0|ST_ENERGY', 'ocf.mnhw': '', 'ocf.di': '86cde607-414a-a9aa-25fe-71fbeeb2c9f8', 'ocf.mnsl': '', 'ocf.dmv': 'res.1.1.0,sh.1.1.0', 'ocf.n': 'Samsung S95BA 65 TV', 'ocf.mnmo': 'QE65S95BATXXH', 'ocf.vid': 'VD-STV-2022', 'ocf.mnmn': 'Samsung Electronics', 'ocf.mnml': '', 'ocf.mnpv': '6.5', 'ocf.mnos': 'Tizen', 'ocf.pi': '86cde607-414a-a9aa-25fe-71fbeeb2c9f8', 'ocf.icv': 'core.1.1.0', 'samsungvd.supportsFeatures.mediaOutputSupported': True, 'samsungvd.supportsFeatures.imeAdvSupported': True, 'samsungvd.supportsFeatures.wifiUpdateSupport': None, 'samsungvd.supportsFeatures.executableServiceList': None, 'samsungvd.supportsFeatures.remotelessSupported': None, 'samsungvd.supportsFeatures.artSupported': None, 'samsungvd.supportsFeatures.mobileCamSupported': True, 'custom.disabledCapabilities.disabledCapabilities': ['samsungvd.supportsFeatures'], 'samsungvd.thingStatus.updatedTime': 1765872602, 'samsungvd.thingStatus.status': 'Idle', 'samsungvd.firmwareVersion.firmwareVersion': '3.5.1', 'audioVolume.volume': '0 %', 'powerConsumptionReport.powerConsumption': {'energy': 0, 'deltaEnergy': 0.038889, 'power': 0, 'powerEnergy': 0, 'persistedEnergy': 0, 'energySaved': 0.0, 'persistedSavedEnergy': 0, 'start': '2025-12-17T08:16:03Z', 'end': '2025-12-17T08:39:59Z'}, 'samsungvd.mediaInputSource.supportedInputSourcesMap': [{'id': 'dtv', 'name': 'TV'}], 'samsungvd.mediaInputSource.inputSource': 'HDMI3', 'samsungvd.ambient.info': None, 'custom.error.error': None, 'execute.data': None, 'tvChannel.tvChannel': '', 'tvChannel.tvChannelName': 'uW3QTCzW3B.Player', 'custom.picturemode.pictureMode': 'Optimised', 'custom.picturemode.supportedPictureModes': ['EyeComfort', 'Optimised'], 'custom.picturemode.supportedPictureModesMap': [{'id': 'modeGen_589826', 'name': 'EyeComfort'}, {'id': 'modeIntelligent', 'name': 'Optimised'}], 'samsungvd.ambientContent.supportedAmbientApps': ['weather'], 'custom.soundmode.supportedSoundModesMap': [{'id': 'modeAmplify', 'name': 'Amplify'}, {'id': 'modeStandard', 'name': 'Standard'}], 'custom.soundmode.soundMode': 'Amplify', 'custom.soundmode.supportedSoundModes': ['Amplify', 'Standard'], 'audioMute.mute': 'muted', 'mediaTrackControl.supportedTrackControlCommands': None}
+Device: Samsung S95BA 65 TV
+ID: 86cde607-414a-a9aa-25fe-71fbeeb2c9f8
+Type: other
+Location: Dom polanka
+Room: Salon
+Capabilities: other, switch, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other, other
+
+Status:
+  audioMute:
+    - mute: muted
+  audioVolume:
+    - volume: 0 %
+  custom:
+    - disabledCapabilities.disabledCapabilities: ['samsungvd.supportsFeatures']
+    - error.error: None
+    - picturemode.pictureMode: Optimised
+    - picturemode.supportedPictureModes: ['EyeComfort', 'Optimised']
+    - picturemode.supportedPictureModesMap: [{'id': 'modeGen_589826', 'name': 'EyeComfort'}, {'id': 'modeIntelligent', 'name': 'Optimised'}]
+    - soundmode.soundMode: Amplify
+    - soundmode.supportedSoundModes: ['Amplify', 'Standard']
+    - soundmode.supportedSoundModesMap: [{'id': 'modeAmplify', 'name': 'Amplify'}, {'id': 'modeStandard', 'name': 'Standard'}]
+  execute:
+    - data: None
+  mediaInputSource:
+    - inputSource: digitalTv
+    - supportedInputSources: []
+  mediaPlayback:
+    - playbackStatus: None
+    - supportedPlaybackCommands: ['play', 'pause', 'stop', 'fastForward', 'rewind']
+  mediaTrackControl:
+    - supportedTrackControlCommands: None
+  ocf:
+    - di: 86cde607-414a-a9aa-25fe-71fbeeb2c9f8
+    - dmv: res.1.1.0,sh.1.1.0
+    - icv: core.1.1.0
+    - mndt: 2022-01-01
+    - mnfv: T-PTMDEUC-1710.0|ST_ENERGY
+    - mnhw: 
+    - mnml: 
+    - mnmn: Samsung Electronics
+    - mnmo: QE65S95BATXXH
+    - mnos: Tizen
+    - mnpv: 6.5
+    - mnsl: 
+    - n: Samsung S95BA 65 TV
+    - pi: 86cde607-414a-a9aa-25fe-71fbeeb2c9f8
+    - st: 2025-07-11T10:28:44Z
+    - vid: VD-STV-2022
+  powerConsumptionReport:
+    - powerConsumption: {'energy': 0, 'deltaEnergy': 0.038889, 'power': 0, 'powerEnergy': 0, 'persistedEnergy': 0, 'energySaved': 0.0, 'persistedSavedEnergy': 0, 'start': '2025-12-17T08:16:03Z', 'end': '2025-12-17T08:39:59Z'}
+  samsungvd:
+    - ambient.info: None
+    - ambientContent.supportedAmbientApps: ['weather']
+    - deviceCategory.category: tv
+    - firmwareVersion.firmwareVersion: 3.5.1
+    - mediaInputSource.inputSource: HDMI3
+    - mediaInputSource.supportedInputSourcesMap: [{'id': 'dtv', 'name': 'TV'}]
+    - supportsFeatures.artSupported: None
+    - supportsFeatures.executableServiceList: None
+    - supportsFeatures.imeAdvSupported: True
+    - supportsFeatures.mediaOutputSupported: True
+    - supportsFeatures.mobileCamSupported: True
+    - supportsFeatures.remotelessSupported: None
+    - supportsFeatures.wifiUpdateSupport: None
+    - supportsPowerOnByOcf.supportsPowerOnByOcf: true
+    - thingStatus.status: Idle
+    - thingStatus.updatedTime: 1765872602
+  sec:
+    - deviceConnectionState.deviceConnectionState: None
+  switch:
+    - switch: off
+  tvChannel:
+    - tvChannel: 
+    - tvChannelName: uW3QTCzW3B.Player
+2025-12-19 17:37:38 [info     ] Stopping smart home agent
+2025-12-19 17:37:38 [info     ] Stopping MCP server
+2025-12-19 17:37:38 [info     ] SmartThings API client closed
+2025-12-19 17:37:38 [info     ] SmartThings provider closed
+2025-12-19 17:37:38 [debug    ] Closed provider                provider=smartthings
+2025-12-19 17:37:38 [info     ] MCP server stopped
+2025-12-19 17:37:38 [info     ] OpenAI client closed
+2025-12-19 17:37:38 [info     ] Agent stopped
