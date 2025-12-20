@@ -1,103 +1,137 @@
-# Comprehensive Smart Home Control MCP Server & Agent
+# SmartThings MCP & Agent
 
-A production-quality, open-source implementation of a Model Context Protocol (MCP) server and AI agent framework for controlling smart home ecosystems. Built with async-first Python, strong typing, and extensible architecture to support multiple LLM providers and smart home platforms.
+A production-ready Model Context Protocol (MCP) server and natural language AI agent for controlling smart home devices. Built with Python 3.11+, async-first architecture, and extensible provider pattern.
 
-## 🚀 Features
+**Status**: Beta (v0.1.0) | **License**: MIT | **Python**: 3.11+
 
-- **MCP Server**: Fully compliant Model Context Protocol implementation exposing smart home capabilities as tools and resources
-- **Multiple Smart Home Platforms**: 
-  - ✅ Samsung SmartThings (fully implemented)
-  - 🔄 Home Assistant (stub, ready for implementation)
-  - 🔄 Matter (stub, ready for implementation)
-  - 🔄 Alexa (stub, ready for implementation)
-- **LLM Agnostic**: Seamlessly switch between:
-  - OpenAI (GPT-4, GPT-3.5)
-  - Anthropic (Claude)
-  - Local LLMs via Ollama
-- **AI Agent**: Natural language device control with:
-  - Ambiguity resolution
-  - Destructive action confirmation
-  - Structured logging and monitoring
-- **Production Ready**:
-  - Full type hints with mypy strict mode
-  - Comprehensive error handling
-  - Async/await throughout
-  - Environment-based configuration
-  - Zero hardcoded secrets
+## Quick Start
 
-## 📋 Table of Contents
+### 1. Install
 
-- [Architecture](#architecture)
-- [Quick Start](#quick-start)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-- [Adding New Providers](#adding-new-providers)
-- [API Reference](#api-reference)
-- [Development](#development)
-- [License](#license)
-
-## 🏗️ Architecture
-
-### High-Level Design
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                      AI Agent Layer                          │
-│  (Natural language → MCP tool calls → Device commands)       │
-└────────────────────┬────────────────────────────────────────┘
-                     │
-┌────────────────────▼────────────────────────────────────────┐
-│                    MCP Server                                │
-│  (Tools, Resources, Schemas, Type Safety)                   │
-└────────────────────┬────────────────────────────────────────┘
-                     │
-┌────────────────────▼────────────────────────────────────────┐
-│              Smart Home Provider Abstraction                 │
-│  ┌──────────────┬──────────────┬──────────────┐            │
-│  │ SmartThings  │ Home Asst.   │ Matter/Alexa │            │
-│  └──────────────┴──────────────┴──────────────┘            │
-└─────────────────────────────────────────────────────────────┘
+```bash
+git clone https://github.com/tatuvlak/smartthings-mcp-and-agent.git
+cd smartthings-mcp-and-agent
+pip install -e .
 ```
 
-### Directory Structure
+### 2. Configure
+
+Set environment variables:
+```bash
+export SMARTTHINGS_PAT_TOKEN="your-pat-token-here"
+export LLM_PROVIDER="openai"  # or anthropic, ollama
+export OPENAI_API_KEY="sk-..."  # if using OpenAI
+```
+
+### 3. Use
+
+```python
+from src.agent import Agent
+from src.providers import SmartThingsProvider
+
+provider = SmartThingsProvider()
+agent = Agent(provider)
+
+# Natural language control
+result = await agent.execute("turn on the living room lights")
+```
+
+## Features
+
+### Core Capabilities
+
+- **🏠 Device Control**: Query and control 1000+ smart devices via natural language
+- **🔌 Multi-Platform**: 
+  - ✅ Samsung SmartThings (production-ready)
+  - 🔄 Home Assistant, Matter, Alexa (extensible stubs)
+- **🤖 LLM Agnostic**: OpenAI, Anthropic Claude, local Ollama
+- **🛡️ Safety**: Confirmation for destructive actions, ambiguity resolution
+- **📡 MCP Server**: Full Model Context Protocol compliance
+
+### Production Ready
+
+- Full type hints (mypy strict mode)
+- Async/await throughout
+- Structured logging
+- Error handling & retries
+- Zero hardcoded secrets
+- Comprehensive tests
+
+## Documentation
+
+| Document | Purpose |
+|----------|---------|
+| [docs/SETUP.md](docs/SETUP.md) | SmartThings PAT token setup |
+| [docs/CONFIGURATION.md](docs/CONFIGURATION.md) | Environment & settings |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | System design & components |
+| [docs/EXAMPLES.md](docs/EXAMPLES.md) | Code examples |
+| [docs/USING_OLLAMA.md](docs/USING_OLLAMA.md) | Local LLM setup |
+
+## Architecture
 
 ```
-smartthings-mcp-and-agent/
-├── src/
-│   ├── __init__.py
-│   ├── config.py                 # Configuration management
-│   ├── logging.py                # Structured logging
-│   ├── models/
-│   │   ├── __init__.py
-│   │   ├── device.py             # Device/capability models
-│   │   ├── location.py           # Location/room models
-│   │   └── schemas.py            # Pydantic schemas
-│   ├── providers/
-│   │   ├── __init__.py
-│   │   ├── base.py               # Abstract SmartHomeProvider
-│   │   ├── smartthings/
-│   │   │   ├── __init__.py
-│   │   │   ├── client.py         # SmartThings API client
-│   │   │   ├── provider.py       # SmartThingsProvider implementation
-│   │   │   └── models.py         # SmartThings-specific models
-│   │   ├── home_assistant/
-│   │   │   ├── __init__.py
-│   │   │   └── provider.py       # Home Assistant stub
-│   │   ├── matter/
-│   │   │   ├── __init__.py
-│   │   │   └── provider.py       # Matter stub
-│   │   └── alexa/
-│   │       ├── __init__.py
-│   │       └── provider.py       # Alexa stub
-│   ├── llm/
-│   │   ├── __init__.py
-│   │   ├── base.py               # Abstract LLMClient
-│   │   ├── openai_client.py      # OpenAI implementation
-│   │   ├── anthropic_client.py   # Anthropic implementation
-│   │   └── ollama_client.py      # Local Ollama implementation
-│   ├── agent/
-│   │   ├── __init__.py
+User/LLM
+   ↓
+┌─────────────────────────────────────┐
+│      AI Agent (Natural Language)     │
+│    - Intent parsing                  │
+│    - Disambiguation                  │
+│    - Safety checks                   │
+└──────────────┬──────────────────────┘
+               ↓
+┌─────────────────────────────────────┐
+│      MCP Server (Tool Interface)     │
+│    - get_devices()                   │
+│    - execute_device_command()        │
+│    - get_device_activities()         │
+└──────────────┬──────────────────────┘
+               ↓
+┌─────────────────────────────────────┐
+│    Provider Abstraction Layer        │
+│    ┌─────────────────────────────┐   │
+│    │   SmartThingsProvider       │   │
+│    │   (client.py, provider.py)  │   │
+│    └─────────────────────────────┘   │
+└──────────────┬──────────────────────┘
+               ↓
+        SmartThings API
+```
+
+## Project Structure
+
+```
+src/
+├── config.py              # Configuration management
+├── logging.py             # Structured logging
+├── models/                # Data models
+│   ├── device.py         # Device models
+│   ├── location.py       # Location/room models
+│   └── activity.py       # Activity/history models
+├── providers/             # Provider implementations
+│   ├── base.py           # Abstract SmartHomeProvider
+│   └── smartthings/      # SmartThings provider
+│       ├── client.py     # API client
+│       ├── provider.py   # Provider wrapper
+│       └── models.py     # SmartThings models
+├── llm/                   # LLM integrations
+│   ├── base.py           # Abstract LLMClient
+│   ├── openai_client.py  # OpenAI
+│   ├── anthropic_client.py
+│   └── ollama_client.py  # Local LLMs
+├── agent/                 # AI agent
+│   ├── agent.py          # Main agent logic
+│   └── utils.py          # Helpers
+└── mcp_server/            # MCP server
+    ├── server.py         # MCP implementation
+    └── schemas.py        # Tool schemas
+
+docs/
+├── SETUP.md              # SmartThings setup guide
+├── CONFIGURATION.md      # Environment setup
+├── ARCHITECTURE.md       # Detailed design
+├── EXAMPLES.md           # Code examples
+└── archive/              # Historical docs
+```
 │   │   ├── agent.py              # AI agent core
 │   │   ├── prompts.py            # System prompts
 │   │   └── tools.py              # Tool definitions
@@ -124,349 +158,143 @@ smartthings-mcp-and-agent/
 └── .gitignore
 ```
 
-## 🚀 Quick Start
+## Installation
 
-### Prerequisites
-
-- Python 3.11+
-- pip or uv
-
-### Installation
+### From Source
 
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/smartthings-mcp-and-agent.git
+git clone https://github.com/tatuvlak/smartthings-mcp-and-agent.git
 cd smartthings-mcp-and-agent
-
-# Install in development mode
-pip install -e ".[dev,mcp,llm-openai]"
-
-# Copy environment template
-cp .env.example .env
+pip install -e ".[dev]"
 ```
 
-### Basic Usage
+### Via pip
 
-1. **Configure SmartThings credentials** (see [Setup Guide](docs/SETUP.md))
-2. **Configure LLM provider** (see [Configuration](docs/CONFIGURATION.md))
-3. **Start the MCP server**:
+```bash
+pip install smartthings-mcp-and-agent
+```
+
+## Configuration
+
+### SmartThings PAT Token
+
+Get your Personal Access Token from [SmartThings Developer Portal](https://my.smartthings.com/):
+
+1. Log in to [my.smartthings.com](https://my.smartthings.com)
+2. Click **Personal Access Tokens** → **Generate new token**
+3. Select required scopes:
+   - `r:devices:*` - Read all devices
+   - `x:devices:*` - Execute commands
+   - `r:locations:*` - Read locations
+4. Copy token to `.env`:
+   ```bash
+   SMARTTHINGS_PAT_TOKEN=your_token_here
+   ```
+
+See [docs/SETUP.md](docs/SETUP.md) for detailed SmartThings setup.
+
+### LLM Provider
+
+Choose your LLM provider:
+
+**OpenAI:**
+```bash
+export LLM_PROVIDER=openai
+export OPENAI_API_KEY=sk-...
+export LLM_MODEL=gpt-4-turbo-preview
+```
+
+**Anthropic Claude:**
+```bash
+export LLM_PROVIDER=anthropic
+export ANTHROPIC_API_KEY=sk-ant-...
+```
+
+**Local Ollama:**
+```bash
+export LLM_PROVIDER=ollama
+export OLLAMA_MODEL=llama2
+```
+
+See [docs/CONFIGURATION.md](docs/CONFIGURATION.md) for full reference.
+
+## Usage
+
+### As Agent
 
 ```python
-from src.mcp_server.server import MCPServer
+from src.agent import Agent
+from src.providers import SmartThingsProvider
+
+async def main():
+    provider = SmartThingsProvider()
+    agent = Agent(provider)
+    
+    result = await agent.execute("turn on living room lights")
+    print(result)
+```
+
+### As MCP Server
+
+```python
+from src.mcp_server import MCPServer
 from src.config import Settings
 
-settings = Settings()
-server = MCPServer(settings)
+server = MCPServer(Settings())
 await server.start()
 ```
 
-4. **Use the agent for natural language control**:
+See [docs/EXAMPLES.md](docs/EXAMPLES.md) for more.
 
-```python
-from src.agent.agent import SmartHomeAgent
-from src.config import Settings
+## Development
 
-settings = Settings()
-agent = SmartHomeAgent(settings)
-
-# Natural language command
-response = await agent.process_command("Turn on the living room lights")
-print(response)
-```
-
-## 📦 Installation
-
-### Standard Installation
+### Testing
 
 ```bash
-# Core dependencies only
-pip install smartthings-mcp-and-agent
-
-# With MCP support
-pip install smartthings-mcp-and-agent[mcp]
-
-# With OpenAI LLM support
-pip install smartthings-mcp-and-agent[llm-openai]
-
-# With all features
-pip install smartthings-mcp-and-agent[all]
-```
-
-### Development Installation
-
-```bash
-git clone https://github.com/yourusername/smartthings-mcp-and-agent.git
-cd smartthings-mcp-and-agent
-pip install -e ".[dev,all]"
-```
-
-## ⚙️ Configuration
-
-### Environment Variables
-
-Create a `.env` file from `.env.example`:
-
-```bash
-# SmartThings
-SMARTTHINGS_PAT_TOKEN=your_token_here
-SMARTTHINGS_API_URL=https://api.smartthings.com
-
-# LLM Provider Selection
-LLM_PROVIDER=openai  # or 'anthropic', 'ollama'
-LLM_MODEL=gpt-4-turbo-preview
-
-# OpenAI (if using OpenAI)
-OPENAI_API_KEY=sk-...
-
-# Anthropic (if using Anthropic)
-ANTHROPIC_API_KEY=sk-ant-...
-
-# Ollama (if using local)
-OLLAMA_BASE_URL=http://localhost:11434
-OLLAMA_MODEL=llama2
-```
-
-See [CONFIGURATION.md](docs/CONFIGURATION.md) for detailed reference.
-
-## 💻 Usage
-
-### As an MCP Server
-
-The server exposes smart home capabilities as MCP tools and resources:
-
-```python
-from src.mcp_server.server import MCPServer
-from src.config import Settings
-
-async def main():
-    settings = Settings()
-    server = MCPServer(settings)
-    
-    # Start server (connects to SmartThings, etc.)
-    await server.start()
-    
-    # Server now exposes:
-    # - Tools: list_devices, get_device_state, execute_command
-    # - Resources: locations, rooms, devices, capabilities
-```
-
-### As an AI Agent
-
-Control devices through natural language:
-
-```python
-from src.agent.agent import SmartHomeAgent
-from src.config import Settings
-
-async def main():
-    settings = Settings()
-    agent = SmartHomeAgent(settings)
-    
-    # Natural language control
-    response = await agent.process_command(
-        "Turn on the living room lights to 80%"
-    )
-    print(f"Agent: {response}")
-```
-
-### Supported Natural Language Commands
-
-```
-"Turn on the living room lights"
-"Set bedroom temperature to 72 degrees"
-"Turn off all lights in the house"
-"Close the kitchen blinds"
-"What devices are in the master bedroom?"
-"Is the front door locked?"
-"Unlock the front door"  # Requires confirmation
-```
-
-See [EXAMPLES.md](docs/EXAMPLES.md) for more examples.
-
-## 🔧 Adding New Providers
-
-To add a new smart home platform (e.g., Home Assistant, Matter):
-
-1. **Implement the provider interface**:
-
-```python
-from src.providers.base import SmartHomeProvider
-from src.models import Location, Device, DeviceState
-
-class MyProviderName(SmartHomeProvider):
-    async def authenticate(self) -> bool:
-        """Authenticate with the provider"""
-        pass
-    
-    async def list_locations(self) -> list[Location]:
-        """List all locations"""
-        pass
-    
-    async def list_rooms(self, location_id: str) -> list[Room]:
-        """List rooms in a location"""
-        pass
-    
-    async def list_devices(
-        self, 
-        location_id: str | None = None
-    ) -> list[Device]:
-        """List devices"""
-        pass
-    
-    async def get_device_state(self, device_id: str) -> DeviceState:
-        """Get current device state"""
-        pass
-    
-    async def execute_command(
-        self,
-        device_id: str,
-        capability: str,
-        command: str,
-        arguments: dict[str, Any]
-    ) -> bool:
-        """Execute a device command"""
-        pass
-```
-
-2. **Register the provider in configuration**:
-
-```python
-# In src/config.py
-PROVIDER_CLASSES = {
-    'smartthings': SmartThingsProvider,
-    'home_assistant': HomeAssistantProvider,  # Your new provider
-}
-```
-
-See [ADDING_PROVIDERS.md](docs/ADDING_PROVIDERS.md) for detailed guide.
-
-## 📚 API Reference
-
-### SmartHomeProvider Interface
-
-All providers implement this async interface:
-
-```python
-class SmartHomeProvider(ABC):
-    """Base class for smart home ecosystem providers."""
-    
-    @abstractmethod
-    async def authenticate(self) -> bool:
-        """Authenticate with the provider."""
-    
-    @abstractmethod
-    async def list_locations(self) -> list[Location]:
-        """List all locations."""
-    
-    @abstractmethod
-    async def list_rooms(self, location_id: str) -> list[Room]:
-        """List rooms in a location."""
-    
-    @abstractmethod
-    async def list_devices(
-        self, 
-        location_id: str | None = None
-    ) -> list[Device]:
-        """List devices, optionally filtered by location."""
-    
-    @abstractmethod
-    async def get_device_state(self, device_id: str) -> DeviceState:
-        """Get the current state of a device."""
-    
-    @abstractmethod
-    async def execute_command(
-        self,
-        device_id: str,
-        capability: str,
-        command: str,
-        arguments: dict[str, Any] = {}
-    ) -> bool:
-        """Execute a command on a device."""
-```
-
-### MCP Tools
-
-The MCP server exposes these tools:
-
-- **list_devices**: Discover all devices
-- **get_device_state**: Read current device state
-- **execute_command**: Send commands to devices
-- **list_locations**: Get location hierarchy
-- **list_rooms**: Get rooms in a location
-
-### Agent Methods
-
-```python
-class SmartHomeAgent:
-    async def process_command(self, command: str) -> str:
-        """Process a natural language command."""
-    
-    async def execute_mcp_tool(
-        self,
-        tool_name: str,
-        tool_input: dict[str, Any]
-    ) -> Any:
-        """Execute an MCP tool directly."""
-```
-
-## 🛠️ Development
-
-### Running Tests
-
-```bash
-# Run all tests
-pytest
-
-# With coverage
-pytest --cov=src
-
-# Specific test file
-pytest tests/test_agent.py -v
-
-# With asyncio debugging
-pytest -v -s
+pytest              # Run all tests
+pytest -v          # Verbose
+pytest --cov=src   # With coverage
 ```
 
 ### Code Quality
 
 ```bash
-# Type checking
-mypy src/
-
-# Linting
-ruff check src/
-
-# Formatting
-black src/ tests/
-
-# All checks
-make lint  # (if Makefile available)
+mypy src/                    # Type checking
+ruff check src/              # Linting
+black --check src/ tests/    # Format check
 ```
 
-### Creating a Development Environment
+### Contributing
 
-```bash
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # or `venv\Scripts\activate` on Windows
+1. Create a feature branch: `git checkout -b feat/my-feature`
+2. Make changes and add tests
+3. Run checks: `pytest && mypy src/ && ruff check src/`
+4. Commit with conventional messages: `git commit -m "feat: add feature"`
+5. Push and open a pull request
 
-# Install in editable mode with all dev dependencies
-pip install -e ".[dev,all]"
+## Architecture
 
-# Run tests to verify
-pytest
-```
+### Core Components
 
-## 🔐 Security Considerations
+- **Providers**: Device platform abstraction (SmartThings, etc.)
+- **Agent**: Natural language → device commands
+- **MCP Server**: Tool/resource interface for LLMs
+- **LLM Client**: Unified interface for OpenAI, Anthropic, Ollama
+- **Models**: Type-safe Pydantic data structures
 
-- **Never commit `.env` files** containing actual credentials
-- **Use environment variables** for all secrets (PAT tokens, API keys)
-- **Rotate credentials regularly**, especially for shared systems
-- **Review SmartThings permissions** - only grant necessary capabilities
-- **Destructive actions require confirmation** (configurable)
-- **Use HTTPS** for webhook/API endpoints in production
+### Extensibility
 
-## 📄 License
+Add new platforms by implementing `SmartHomeProvider` interface. See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+## License
+
+MIT License - see [LICENSE](LICENSE)
+
+## Support
+
+- **Docs**: [docs/](docs/)
+- **Issues**: [GitHub Issues](https://github.com/tatuvlak/smartthings-mcp-and-agent/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/tatuvlak/smartthings-mcp-and-agent/discussions)
 
 This project is licensed under the MIT License - see [LICENSE](LICENSE) file for details.
 
