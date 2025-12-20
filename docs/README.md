@@ -1,103 +1,79 @@
-# SmartThings API Setup & Permissions - Documentation Index
+# Documentation
 
-## 📚 Quick Navigation
+Complete guide to SmartThings MCP & Agent project.
 
-### 🚀 Getting Started (Do This First)
-1. **[SMARTTHINGS_SETUP_COMPLETE.md](SMARTTHINGS_SETUP_COMPLETE.md)** - Complete guide from start to finish
-   - Overview of the fix
-   - Permission levels by scope
-   - Common issues & solutions
-   - Next steps
+## Getting Started
 
-### ✅ Before You Test
-2. **[SMARTTHINGS_PERMISSIONS_CHECKLIST.md](SMARTTHINGS_PERMISSIONS_CHECKLIST.md)** - Step-by-step verification
-   - Verification checklist
-   - Troubleshooting decision tree
-   - Debugging commands
-   - Success indicators
+| Document | Purpose |
+|----------|---------|
+| [SETUP.md](SETUP.md) | 🚀 SmartThings PAT token setup (START HERE) |
+| [CONFIGURATION.md](CONFIGURATION.md) | ⚙️ Environment variables & settings |
+| [EXAMPLES.md](EXAMPLES.md) | 💻 Code examples & usage patterns |
 
-### 📖 Detailed References
-3. **[docs/SMARTTHINGS_PERMISSIONS.md](docs/SMARTTHINGS_PERMISSIONS.md)** - In-depth guide
-   - SmartThings API endpoints
-   - PAT token permission scopes
-   - Checking token permissions
-   - Fixing 404 errors
-   - API response structures
+## Reference
 
-4. **[docs/SMARTTHINGS_API_QUICK_REF.md](docs/SMARTTHINGS_API_QUICK_REF.md)** - Quick lookup
-   - What was fixed
-   - Implementation changes
-   - Permission table
-   - Troubleshooting guide
-   - Endpoint reference
+| Document | Purpose |
+|----------|---------|
+| [ARCHITECTURE.md](ARCHITECTURE.md) | 🏗️ System design & components |
+| [ADDING_PROVIDERS.md](ADDING_PROVIDERS.md) | 🔌 Add new smart home platforms |
+| [SMARTTHINGS_PERMISSIONS.md](SMARTTHINGS_PERMISSIONS.md) | 🔐 API scopes & permissions |
+| [SMARTTHINGS_API_QUICK_REF.md](SMARTTHINGS_API_QUICK_REF.md) | 📖 SmartThings API quick reference |
+| [USING_OLLAMA.md](USING_OLLAMA.md) | 🤖 Local LLM setup with Ollama |
 
-5. **[docs/SETUP.md](docs/SETUP.md)** - Original setup guide (updated)
-   - SmartThings PAT token generation
-   - OAuth alternative (optional)
-   - Supported device types
-   - Capabilities reference
-   - Troubleshooting
+## Quick Setup
 
----
+### 1. Get SmartThings PAT Token
 
-## 🎯 The Problem & Solution
+Visit [SmartThings Developer Portal](https://account.smartthings.com/tokens) and create a Personal Access Token with these scopes:
+- `r:locations:*` - Read locations
+- `r:devices:*` - Read all devices (**REQUIRED**)
+- `x:devices:*` - Execute commands
 
-### ❌ Original Issue
-```
-GET /locations/{locationId}/devices → 404 Not Found
-(Endpoint not available on many SmartThings accounts)
-```
+### 2. Configure Environment
 
-### ✅ Current Solution
-```
-GET /devices → ✅ Works on all accounts
-Filter by location in Python code
-```
-
----
-
-## 📋 Minimum Setup (TL;DR)
-
-### 1. Get Your PAT Token
-Visit: https://account.smartthings.com/tokens
-
-### 2. Select These Scopes
-```
-✅ r:locations:*    (Read locations)
-✅ r:devices:*      (Read ALL devices - CRITICAL)
-✅ x:devices:*      (Execute commands)
-```
-
-### 3. Update .env File
 ```bash
-cp .env.example .env
-```
-```env
-SMARTTHINGS_PAT_TOKEN=your_token_here
-SMARTTHINGS_API_URL=https://api.smartthings.com
+export SMARTTHINGS_PAT_TOKEN="your_token_here"
+export LLM_PROVIDER="openai"  # or anthropic, ollama
+export OPENAI_API_KEY="sk-..."
 ```
 
-### 4. Test Connection
+### 3. Test Connection
+
 ```bash
 python mcp_connection_test.py
 ```
 
-### 5. Look For Success
+## File Structure
+
 ```
-✅ Authentication successful!
-✅ Found X location(s)
-  📍 Location Name
-     Found X device(s):
-       • Device Name: type
-✅ Connection test completed successfully!
+docs/
+├── README.md (this file)
+├── SETUP.md                      # SmartThings setup guide
+├── CONFIGURATION.md              # Environment configuration
+├── ARCHITECTURE.md               # System design
+├── EXAMPLES.md                   # Code examples
+├── ADDING_PROVIDERS.md           # New provider guide
+├── SMARTTHINGS_PERMISSIONS.md    # API scopes & permissions
+├── SMARTTHINGS_API_QUICK_REF.md # API reference
+├── USING_OLLAMA.md              # Local LLM setup
+├── MANIFEST.md                   # Project manifest
+└── archive/                      # Historical documentation
 ```
 
----
+## Troubleshooting
 
-## ❓ Common Questions
+**Connection fails?**
+- Check [SETUP.md](SETUP.md) - SmartThings configuration
+- Verify PAT token has `r:devices:*` scope
+- See [SMARTTHINGS_PERMISSIONS.md](SMARTTHINGS_PERMISSIONS.md) for debugging
 
-### Q: What's the critical scope?
-**A:** `r:devices:*` - This must be present to read all devices
+**LLM not responding?**
+- Check [CONFIGURATION.md](CONFIGURATION.md) - LLM setup
+- Verify API keys are set
+- See [USING_OLLAMA.md](USING_OLLAMA.md) for local LLM
+
+**Want to add a new provider?**
+- See [ADDING_PROVIDERS.md](ADDING_PROVIDERS.md)
 
 ### Q: Why did we change endpoints?
 **A:** `/locations/{id}/devices` returns 404 on many accounts. The account-wide `/devices` endpoint always works.
