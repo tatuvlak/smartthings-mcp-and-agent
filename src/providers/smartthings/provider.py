@@ -2,6 +2,7 @@
 
 from datetime import datetime
 from typing import Any
+from src.utils.parsers import parse_device_raw
 
 from src.logging import get_logger
 from src.models.activity import Activity, ActivityChange, ActivityPage, ActivitySource, ActivityType
@@ -283,45 +284,41 @@ class SmartThingsProvider(SmartHomeProvider):
         Returns:
             Parsed Device object
         """
-        device_id = device_data.get("deviceId", "")
-        device_type_name = device_data.get("deviceTypeName", "")
+        # Use shared parser to get a normalized representation
+        parsed = parse_device_raw(device_data)
 
-        # Parse capabilities
+        # Parse capabilities using existing logic (capability type mapping preserved)
         capabilities = []
-        components = device_data.get("components", [])
-        for component in components:
-            if component.get("id") == "main":
-                for cap_data in component.get("capabilities", []):
-                    cap_type_str = cap_data.get("id", "")
-                    try:
-                        cap_type = CapabilityType(cap_type_str)
-                    except ValueError:
-                        cap_type = CapabilityType.OTHER
+        for component in device_data.get("components", []):
+            if component.get("id") != "main":
+                continue
+            for cap_data in component.get("capabilities", []):
+                cap_type_str = cap_data.get("id", "")
+                try:
+                    cap_type = CapabilityType(cap_type_str)
+                except ValueError:
+                    cap_type = CapabilityType.OTHER
 
-                    # Parse commands
-                    commands = cap_data.get("commands", [])
-                    command_names = [cmd.get("name", "") for cmd in commands]
+                commands = cap_data.get("commands", [])
+                command_names = [cmd.get("name", "") for cmd in commands]
 
-                    capability = Capability(
-                        type=cap_type,
-                        commands=command_names,
-                        metadata={"raw": cap_data},
-                    )
-                    capabilities.append(capability)
-
-        # Get device state
-        state = self._extract_device_state(device_data)
+                capability = Capability(
+                    type=cap_type,
+                    commands=command_names,
+                    metadata={"raw": cap_data},
+                )
+                capabilities.append(capability)
 
         device = Device(
-            id=device_id,
-            name=device_data.get("label", "Unknown"),
-            device_type=self._map_device_type(device_type_name),
-            location_id=device_data.get("locationId", ""),
-            room_id=device_data.get("roomId"),
-            manufacturer=device_data.get("manufacturerName"),
-            model=device_data.get("deviceNetworkType"),
+            id=parsed.get("id") or "",
+            name=parsed.get("name") or "Unknown",
+            device_type=self._map_device_type(parsed.get("device_type_name", "")),
+            location_id=parsed.get("location_id") or "",
+            room_id=parsed.get("room_id"),
+            manufacturer=parsed.get("manufacturer"),
+            model=parsed.get("model"),
             capabilities=capabilities,
-            state=state,
+            state=parsed.get("state", {}),
             metadata={"raw": device_data},
         )
 

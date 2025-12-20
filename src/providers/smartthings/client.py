@@ -3,6 +3,7 @@
 from datetime import datetime
 from typing import Any
 from urllib.parse import urlencode
+from src.utils.parsers import parse_device_raw
 
 import httpx
 
@@ -206,27 +207,17 @@ class SmartThingsAPIClient:
         Returns:
             Normalized device data
         """
-        # Extract component state
-        state = {}
-        components = device_data.get("components", [])
-        for component in components:
-            if component.get("id") == "main":
-                capabilities = component.get("capabilities", [])
-                for cap in capabilities:
-                    cap_type = cap.get("id")
-                    cap_data = cap.get("status", {})
-                    for attr in cap_data:
-                        state[attr.get("name", "")] = attr.get("value")
-
+        parsed = parse_device_raw(device_data)
+        # Map device type string to client's internal string representation
         return {
-            "id": device_data.get("deviceId"),
-            "name": device_data.get("label"),
-            "device_type": self._map_device_type(device_data.get("deviceTypeName", "")),
-            "location_id": device_data.get("locationId"),
-            "room_id": device_data.get("roomId"),
-            "manufacturer": device_data.get("manufacturerName"),
-            "model": device_data.get("deviceNetworkType"),
-            "state": state,
+            "id": parsed.get("id"),
+            "name": parsed.get("name"),
+            "device_type": self._map_device_type(parsed.get("device_type_name", "")),
+            "location_id": parsed.get("location_id"),
+            "room_id": parsed.get("room_id"),
+            "manufacturer": parsed.get("manufacturer"),
+            "model": parsed.get("model"),
+            "state": parsed.get("state", {}),
         }
 
     @staticmethod
