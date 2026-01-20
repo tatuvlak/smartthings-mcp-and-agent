@@ -8,4 +8,6 @@
     <string name="error">Error loading weather data</string>
     <string name="connected">Connected to SmartThings</string>
     <string name="disconnected">Disconnected from SmartThings</string>
+    <string name="refresh_weather_description">Refresh weather data from SmartThings</string>
+    <string name="connect_tv_description">Connect to Samsung TV for weather information</string>
 </resources>
