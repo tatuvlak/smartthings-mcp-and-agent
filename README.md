@@ -43,6 +43,7 @@ result = await agent.execute("turn on the living room lights")
 ### Core Capabilities
 
 - **🏠 Device Control**: Query and control 1000+ smart devices via natural language
+- **📱 Android App**: Weather app for displaying SmartThings data on your phone
 - **🔌 Multi-Platform**: 
   - ✅ Samsung SmartThings (production-ready)
   - 🔄 Home Assistant, Matter, Alexa (extensible stubs)
@@ -133,6 +134,16 @@ docs/
 ├── ARCHITECTURE.md       # Detailed design
 ├── EXAMPLES.md           # Code examples
 └── archive/              # Historical docs
+
+android-weather-app/      # Android companion app
+├── app/                  # Android application
+│   ├── src/main/
+│   │   ├── java/         # Kotlin source files
+│   │   ├── res/          # Resources (layouts, strings, etc.)
+│   │   └── AndroidManifest.xml
+│   └── build.gradle      # App dependencies
+├── README.md             # Android app guide
+└── DEVELOPMENT.md        # Development instructions
 ```
 │   │   ├── agent.py              # AI agent core
 │   │   ├── prompts.py            # System prompts
@@ -247,6 +258,35 @@ await server.start()
 ```
 
 See [docs/EXAMPLES.md](docs/EXAMPLES.md) for more.
+
+## Android App
+
+The project includes an Android companion app for displaying weather information from SmartThings devices on your phone.
+
+### Features
+- 📱 Clean Material Design interface
+- 🌤️ Display weather from Samsung TV ambient apps
+- 🔄 Real-time updates from SmartThings API
+- 🔗 Direct integration with SmartThings devices
+
+### Quick Start
+
+1. **Open in Android Studio:**
+   ```bash
+   cd android-weather-app
+   # Open folder in Android Studio
+   ```
+
+2. **Configure SDK:**
+   - Android Studio will auto-detect your Android SDK
+   - Or set `sdk.dir` in `local.properties`
+
+3. **Build & Run:**
+   ```bash
+   ./gradlew assembleDebug
+   ```
+
+See [android-weather-app/README.md](android-weather-app/README.md) and [android-weather-app/DEVELOPMENT.md](android-weather-app/DEVELOPMENT.md) for detailed instructions.
 
 ## Development
 
